@@ -21,9 +21,9 @@ class Shape():
         self._root_frame.coords(self._geometry, coords_list)
 
 class Line(Shape):
-    def __init__(self, root_frame, event, colour, outlineColour):
+    def __init__(self, root_frame, event, colour, outlineColour, outlineScale):
         super().__init__(root_frame,(event.x,event.y))
-        self._geometry = self._root_frame.create_line(event.x, event.y, event.x, event.y, fill=colour)
+        self._geometry = self._root_frame.create_line(event.x, event.y, event.x, event.y, fill=colour,width=outlineScale)
     def continue_draw(self,event):
         coords_list = self._root_frame.coords(self._geometry)
         coords_list[2] = event.x
@@ -31,6 +31,6 @@ class Line(Shape):
         self._root_frame.coords(self._geometry, coords_list)
 
 class Rectangle(Shape):
-    def __init__(self, root_frame, event, colour, outlineColour):
+    def __init__(self, root_frame, event, colour, outlineColour, outlineScale):
         super().__init__(root_frame,(event.x,event.y))
-        self._geometry = self._root_frame.create_rectangle(event.x, event.y, event.x, event.y, fill=colour,outline=outlineColour)
+        self._geometry = self._root_frame.create_rectangle(event.x, event.y, event.x, event.y, fill=colour,outline=outlineColour, width=outlineScale)
