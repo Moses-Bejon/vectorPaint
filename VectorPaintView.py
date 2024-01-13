@@ -29,13 +29,10 @@ class ButtonBar:
         for row in range(width):
             self.frame.rowconfigure(row)
 
-        self.__borderScaler = Scale(self.frame,orient=HORIZONTAL)
+        self.__borderScaler = Scale(self.frame,orient=HORIZONTAL,command=controls.set_outline_thickness)
 
         Label(self.frame,text="shape border size:").grid(row=height+1,column=0)
         self.__borderScaler.grid(row=height+1,column=1,columnspan=width-1,sticky="NSEW")
-
-    def getBorderScale(self):
-        return self.__borderScaler.get()
 
 class myCanvas:
     def __init__(self, root_frame):
@@ -43,6 +40,7 @@ class myCanvas:
 
         self.__currColour = "Red"
         self.__currOutlineColour = "Red"
+        self.__currOutlineThickness = 0
         self.__currShape = Line
         self.__currPlace = None
 
@@ -52,16 +50,14 @@ class myCanvas:
         self.frame.bind("<ButtonRelease-1>", self.stop_draw)
         self.frame.bind("<B1-Motion>", self.continue_draw)
 
-    def set_scaler(self, scaler):
-        self.__scaler = scaler
-    def get_outline_scale(self):
-        return self.__scaler()
-
     def set_colour(self, colour):
         self.__currColour = colour
 
     def set_outline_colour(self,colour):
         self.__currOutlineColour = colour
+
+    def set_outline_thickness(self,thickness):
+        self.__currOutlineThickness = thickness
 
     def set_background_colour(self,colour):
         self.frame.config(bg=colour)
@@ -70,7 +66,7 @@ class myCanvas:
         self.__currShape = shape
 
     def start_draw(self, event):
-        self.__currObject = self.__currShape(self.frame,event,self.__currColour,self.__currOutlineColour,self.get_outline_scale())
+        self.__currObject = self.__currShape(self.frame,event,self.__currColour,self.__currOutlineColour,self.__currOutlineThickness)
 
     def continue_draw(self, event):
         self.__currObject.continue_draw(event)
